@@ -260,7 +260,7 @@ const pages = {
         <img class="hero-avatar" src="https://cdn.modrinth.com/user/d1i0RLDm/f4748ef6959f14f70cfe7f35867ebbea6c62a7ee_96.webp" alt="HelixCraft" onerror="this.src='https://github.com/HelixCraft.png'">
         <div>
           <div class="hero-name">HelixCraft</div>
-          <div class="hero-bio">Developer passionate about Minecraft Fabric mods, Python, and graphic design.<br>Creator of the Lucid addon.</div>
+          <div class="hero-bio">Open source hobbyist developer from Germany. I build tools I find useful and share them so others can benefit too. Mostly working with Java, Python, and Bash on Linux.</div>
           <div class="hero-stats">
             <div class="hero-stat"><strong>4</strong> Modrinth projects</div>
             <div class="hero-stat"><strong>1.52K</strong> downloads</div>
@@ -370,8 +370,8 @@ const pages = {
       <div class="section-label">About</div>
       <div class="about-grid">
         <div class="about-cell">
-          <div class="cell-label">Bio</div>
-          <div class="cell-text">Developer focused on Minecraft Fabric modding, Python automation, and graphic design. Creator of several community mods on Modrinth.</div>
+          <div class="cell-label">About</div>
+          <div class="cell-text">I'm a self-taught hobbyist developer from Germany who builds tools out of genuine need and shares them openly. Most of my work lives at the intersection of Minecraft modding and Linux tooling — I develop Fabric mods ranging from utility and automation mods to more advanced client-side modifications, and I enjoy reverse-engineering game mechanics to understand how things work under the hood.<br><br>My main languages are Java, Python, and Bash, with some web development mixed in. I run Linux as my daily driver and feel at home in the terminal. Most of my projects start because I couldn't find something that did exactly what I wanted — so I built it myself.<br><br>Beyond coding, I do a bit of graphic design and 3D animation. I care about clean, practical solutions over flashy ones. If something I make turns out useful for others, that's the whole point.</div>
         </div>
         <div class="about-cell">
           <div class="cell-label">Tech</div>
