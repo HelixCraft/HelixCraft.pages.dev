@@ -336,14 +336,30 @@ const pages = {
 
   activity: () => `
     <div class="wrap">
-      <div class="section-label">Contributions — Last 12 months</div>
-      <div class="contrib-box" style="margin-bottom:36px">
+      <div class="section-label">GitHub Activity</div>
+      
+      <div class="github-widgets-grid">
+        <div class="github-widget">
+          <img src="https://github-readme-stats.vercel.app/api?username=HelixCraft&show_icons=true&theme=dark&bg_color=1a1c1a&title_color=ffffff&text_color=ffffff&icon_color=5aaa64&border_color=2a2e2a&hide_border=false&include_all_commits=true&count_private=true" alt="GitHub Stats">
+        </div>
+        <div class="github-widget">
+          <img src="https://github-readme-streak-stats.herokuapp.com/?user=HelixCraft&theme=dark&background=1a1c1a&ring=5aaa64&fire=7ec986&currStreakLabel=ffffff&sideLabels=ffffff&currStreakNum=ffffff&dates=ffffff&sideNums=ffffff&border=2a2e2a&stroke=2a2e2a" alt="GitHub Streak">
+        </div>
+      </div>
+
+      <div class="github-widget-full">
+        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=HelixCraft&layout=compact&theme=dark&bg_color=1a1c1a&title_color=ffffff&text_color=ffffff&border_color=2a2e2a&langs_count=8" alt="Top Languages">
+      </div>
+
+      <div class="section-label" style="margin-top:36px">Contributions — Last 12 months</div>
+      <div class="contrib-box">
         <div class="contrib-inner">
-          <img src="https://github-contributions.vercel.app/api/v1/HelixCraft" alt="GitHub Contributions" onerror="this.style.display='none';document.getElementById('cf').style.display='block'">
+          <img src="https://github-readme-activity-graph.vercel.app/graph?username=HelixCraft&bg_color=1a1c1a&color=ffffff&line=5aaa64&point=7ec986&area=true&hide_border=true&custom_title=Contribution%20Graph" alt="Contribution Graph" onerror="this.style.display='none';document.getElementById('cf').style.display='block'">
           <div class="contrib-fallback" id="cf" style="display:none">Graph unavailable — view at <a href="https://github.com/HelixCraft" target="_blank">github.com/HelixCraft</a></div>
         </div>
       </div>
-      <div class="section-label">Numbers</div>
+
+      <div class="section-label" style="margin-top:36px">Numbers</div>
       <div class="stats-grid" id="statsGrid">
         <div class="stat-cell"><div class="stat-num" id="stat-commits">—</div><div class="stat-label">contributions / year</div></div>
         <div class="stat-cell"><div class="stat-num" id="stat-repos">—</div><div class="stat-label">public repos</div></div>

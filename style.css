@@ -626,6 +626,51 @@ body.light-mode .moon-icon {
 }
 
 /* CONTRIB */
+.github-widgets-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+@media (max-width: 768px) {
+  .github-widgets-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.github-widget {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.github-widget img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+.github-widget-full {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.github-widget-full img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
 .contrib-box {
   background: var(--bg2);
   border: 1px solid var(--border);
@@ -643,6 +688,8 @@ body.light-mode .moon-icon {
   display: block;
   border-radius: 4px;
 }
+body.light-mode .github-widget img,
+body.light-mode .github-widget-full img,
 body.light-mode .contrib-inner img {
   filter: brightness(1.05);
 }
