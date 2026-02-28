@@ -27,8 +27,21 @@ function toggleTheme() {
 
 // Load theme
 function loadTheme() {
-  if (localStorage.getItem("theme") === "light")
+  const savedTheme = localStorage.getItem("theme");
+
+  if (savedTheme === "light") {
     document.body.classList.add("light-mode");
+  } else if (savedTheme === "dark") {
+    document.body.classList.remove("light-mode");
+  } else {
+    // No saved preference, use system preference
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: light)").matches
+    ) {
+      document.body.classList.add("light-mode");
+    }
+  }
 }
 
 // Time ago helper
@@ -339,7 +352,8 @@ const pages = {
       <div class="section-label">Contributions — Last 12 months</div>
       <div class="contrib-box" style="margin-bottom:36px">
         <div class="contrib-inner">
-          <img src="https://ghchart.rshah.org/3d7a45/HelixCraft" alt="GitHub Contributions" onerror="this.style.display='none';document.getElementById('cf').style.display='block'">
+          <img class="contrib-dark" src="https://ghchart.rshah.org/3d7a45/HelixCraft" alt="GitHub Contributions" onerror="this.style.display='none';document.getElementById('cf').style.display='block'">
+          <img class="contrib-light" src="https://ghchart.rshah.org/3d7a45/HelixCraft" alt="GitHub Contributions" onerror="this.style.display='none';document.getElementById('cf').style.display='block'">
           <div class="contrib-fallback" id="cf" style="display:none">Graph unavailable — view at <a href="https://github.com/HelixCraft" target="_blank">github.com/HelixCraft</a></div>
         </div>
       </div>
