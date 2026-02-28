@@ -885,6 +885,27 @@ body.light-mode .contrib-inner img {
   color: var(--accent3);
   border-color: var(--accent);
 }
+.donate-contact {
+  margin-top: 24px;
+  padding: 16px 20px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text2);
+  text-align: center;
+}
+.donate-contact a {
+  color: var(--accent3);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+.donate-contact a:hover {
+  color: var(--accent2);
+  text-decoration: underline;
+}
 
 /* FOOTER */
 .footer {

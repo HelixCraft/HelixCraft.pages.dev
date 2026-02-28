@@ -410,6 +410,9 @@ const pages = {
           <button class="copy-btn" data-original="Copy email address" onclick="copyAddr('pp-addr',this)">Copy email address</button>
         </div>
       </div>
+      <div class="donate-contact">
+        If you have any problems, contact me on Discord: <a href="https://discordapp.com/users/1292854102174470250" target="_blank" rel="noopener noreferrer">@xhuhnx</a>
+      </div>
     </div>
   `,
 };
