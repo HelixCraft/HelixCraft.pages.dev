@@ -339,7 +339,7 @@ const pages = {
       <div class="section-label">Contributions — Last 12 months</div>
       <div class="contrib-box" style="margin-bottom:36px">
         <div class="contrib-inner">
-          <img src="https://ghchart.rshah.org/3d7a45/HelixCraft" alt="GitHub Contributions" onerror="this.style.display='none';document.getElementById('cf').style.display='block'">
+          <img src="https://github-contributions.vercel.app/api/v1/HelixCraft" alt="GitHub Contributions" onerror="this.style.display='none';document.getElementById('cf').style.display='block'">
           <div class="contrib-fallback" id="cf" style="display:none">Graph unavailable — view at <a href="https://github.com/HelixCraft" target="_blank">github.com/HelixCraft</a></div>
         </div>
       </div>
