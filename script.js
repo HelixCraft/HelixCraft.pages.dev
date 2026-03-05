@@ -408,19 +408,19 @@ const pages = {
       <p class="donate-intro">If my mods have been useful, consider supporting further development. All contributions are appreciated and help keep the projects alive.</p>
       <div class="donate-grid">
         <div class="donate-card">
+          <div class="donate-header"><div class="donate-logo pp">P</div><div class="donate-title">PayPal</div></div>
+          <div class="donate-addr" id="pp-addr">kern-hoeffner32@posteo.de</div>
+          <button class="copy-btn" data-original="Copy email address" onclick="copyAddr('pp-addr',this)">Copy email address</button>
+        </div>
+        <div class="donate-card">
           <div class="donate-header"><div class="donate-logo btc">₿</div><div class="donate-title">Bitcoin (BTC)</div></div>
-          <div class="donate-addr" id="btc-addr">bc1qrtgul3gv4twc6stesgknzy94lwssffu28dq44c</div>
+          <div class="donate-addr" id="btc-addr">bc1qe03jcl55xa0pzvzpd6t38x7jlvqra5wz20pmz7</div>
           <button class="copy-btn" data-original="Copy address" onclick="copyAddr('btc-addr',this)">Copy address</button>
         </div>
         <div class="donate-card">
           <div class="donate-header"><div class="donate-logo ltc">Ł</div><div class="donate-title">Litecoin (LTC)</div></div>
-          <div class="donate-addr" id="ltc-addr">LYn6LCmjD2WyuGGTU2tR7tHGpzXAFmPU3C</div>
+          <div class="donate-addr" id="ltc-addr">LMhyY5d3b9sdeJZ7H2DTGdQ1EHch9vGHzf</div>
           <button class="copy-btn" data-original="Copy address" onclick="copyAddr('ltc-addr',this)">Copy address</button>
-        </div>
-        <div class="donate-card">
-          <div class="donate-header"><div class="donate-logo pp">P</div><div class="donate-title">PayPal</div></div>
-          <div class="donate-addr" id="pp-addr">kern-hoeffner32@posteo.de</div>
-          <button class="copy-btn" data-original="Copy email address" onclick="copyAddr('pp-addr',this)">Copy email address</button>
         </div>
       </div>
       <div class="donate-contact">
