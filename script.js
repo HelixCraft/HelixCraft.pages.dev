@@ -10,7 +10,13 @@ const LANG_COLORS = {
 };
 
 // Featured projects
-const FEATURED_REPOS = ["Bedrock-Formation-Locator", "Lucid-addon", "Slidium"];
+const FEATURED_REPOS = [
+  "Live-Regex-Find-Replace",
+  "Fabric-Packet-Logger",
+  "Bedrock-Formation-Locator",
+  "Chat-AI-Project-Builder-and-Exporter",
+  "Lucid-addon",
+];
 
 // Global state
 let allRepos = [];
