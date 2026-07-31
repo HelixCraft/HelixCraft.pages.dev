@@ -74,3 +74,7 @@ For proper routing on static hosts, you may need to configure redirects:
 - `/activity` - GitHub contributions & stats
 - `/about` - Bio, tech stack, social links
 - `/donate` - BTC, LTC, PayPal donation info
+
+## License
+
+This project is licensed under the [GNU General Public License v3.0](LICENSE).
