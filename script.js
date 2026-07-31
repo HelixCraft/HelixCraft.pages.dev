@@ -513,6 +513,7 @@ function router() {
     if (modrinthProjects) renderModrinth(modrinthProjects);
   } else if (pageName === "activity") {
     fetchGitHubStats().then((stats) => renderStats(stats));
+    if (modrinthProjects) renderModrinth(modrinthProjects);
   }
 
   window.scrollTo(0, 0);
