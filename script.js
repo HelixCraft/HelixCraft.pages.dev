@@ -20,6 +20,7 @@ const FEATURED_REPOS = [
 
 // Global state
 let allRepos = [];
+let modrinthProjects = null;
 let currentSort = { column: "stars", direction: "asc" };
 
 // Theme toggle
@@ -500,7 +501,14 @@ function router() {
     if (allRepos.length > 0) {
       renderFeaturedProjects(allRepos);
       sortRepos("stars");
+      const totalStars = allRepos.reduce(
+        (sum, repo) => sum + repo.stargazers_count,
+        0,
+      );
+      const starsEl = document.getElementById("hero-stat-stars");
+      if (starsEl) starsEl.textContent = totalStars || "—";
     }
+    if (modrinthProjects) renderModrinth(modrinthProjects);
   } else if (pageName === "activity") {
     fetchGitHubStats().then((stats) => renderStats(stats));
   }
@@ -527,20 +535,14 @@ async function init() {
   const repos = await fetchGitHubRepos();
   if (repos) {
     allRepos = repos.sort((a, b) => b.stargazers_count - a.stargazers_count);
-    const totalStars = allRepos.reduce(
-      (sum, repo) => sum + repo.stargazers_count,
-      0,
-    );
-    const starsEl = document.getElementById("hero-stat-stars");
-    if (starsEl) starsEl.textContent = totalStars || "—";
   }
 
   // Initial route
   router();
 
   // Fetch Modrinth projects (public API, no key needed)
-  const projects = await fetchModrinthProjects();
-  if (projects) renderModrinth(projects);
+  modrinthProjects = await fetchModrinthProjects();
+  if (modrinthProjects) renderModrinth(modrinthProjects);
 }
 
 // Run on page load
