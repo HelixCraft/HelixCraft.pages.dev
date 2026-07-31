@@ -621,7 +621,7 @@ const pages = {
         </div>
       </div>
       <div class="donate-contact">
-        If you have any problems, contact me on Discord: <a href="https://discordapp.com/users/1502297205845790781" target="_blank" rel="noopener noreferrer">@xhuhnx</a>
+        If you have any problems, contact me on Discord: <a href="https://discordapp.com/users/1502297205845790781" target="_blank" rel="noopener noreferrer">@hcmc8</a>
       </div>
     </div>
   `,
