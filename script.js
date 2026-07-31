@@ -346,7 +346,7 @@ const pages = {
           <div class="hero-stats">
             <div class="hero-stat"><strong id="hero-mod-projects">—</strong> Modrinth projects</div>
             <div class="hero-stat"><strong id="hero-mod-downloads">—</strong> Mod Downloads</div>
-            <div class="hero-stat"><strong>17</strong> GitHub repos</div>
+            <div class="hero-stat"><strong id="hero-stat-repos">—</strong> GitHub repos</div>
             <div class="hero-stat"><strong id="hero-stat-stars">—</strong> GitHub stars</div>
           </div>
           <div class="hero-links">
@@ -507,6 +507,8 @@ function router() {
       );
       const starsEl = document.getElementById("hero-stat-stars");
       if (starsEl) starsEl.textContent = totalStars || "—";
+      const reposEl = document.getElementById("hero-stat-repos");
+      if (reposEl) reposEl.textContent = allRepos.length || "—";
     }
     if (modrinthProjects) renderModrinth(modrinthProjects);
   } else if (pageName === "activity") {
