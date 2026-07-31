@@ -349,11 +349,17 @@ body.light-mode .moon-icon {
 }
 .featured-stars {
   font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text3);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
   display: flex;
   align-items: center;
   gap: 4px;
+}
+.featured-stars svg {
+  width: 13px;
+  height: 13px;
+  color: #f5b301;
 }
 .featured-desc {
   font-size: 13px;
@@ -485,6 +491,11 @@ body.light-mode .moon-icon {
   gap: 5px;
   white-space: nowrap;
 }
+.mod-stat-downloads {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+}
 
 /* REPO TABLE */
 .repo-table-wrap {
@@ -599,14 +610,20 @@ body.light-mode .moon-icon {
 .repo-stars-cell {
   text-align: right;
   font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text3);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
 }
 .repo-stars-content {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   justify-content: flex-end;
+}
+.repo-stars-content svg {
+  width: 13px;
+  height: 13px;
+  color: #f5b301;
 }
 .repo-updated-cell {
   text-align: right;

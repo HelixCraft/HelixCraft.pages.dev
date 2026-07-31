@@ -117,6 +117,79 @@ async function fetchGitHubStats() {
   }
 }
 
+// Fetch Modrinth projects for a user (public API, no key required)
+async function fetchModrinthProjects() {
+  try {
+    const userRes = await fetch("https://api.modrinth.com/v2/user/HelixCraft");
+    if (!userRes.ok) throw new Error("Modrinth API error");
+    const user = await userRes.json();
+
+    const projectsRes = await fetch(
+      `https://api.modrinth.com/v2/user/${user.id}/projects`,
+    );
+    if (!projectsRes.ok) throw new Error("Modrinth projects error");
+    const projects = await projectsRes.json();
+    return Array.isArray(projects) ? projects : null;
+  } catch (error) {
+    console.error("Error fetching Modrinth projects:", error);
+    return null;
+  }
+}
+
+// Format number compactly (e.g. 1520 -> "1.52K")
+function formatNumber(num) {
+  if (num === null || num === undefined || isNaN(num)) return "—";
+  if (num >= 1000000) return (num / 1000000).toFixed(2).replace(/\.?0+$/, "") + "M";
+  if (num >= 1000) return (num / 1000).toFixed(2).replace(/\.?0+$/, "") + "K";
+  return String(num);
+}
+
+// Render Modrinth mod cards + hero stats
+function renderModrinth(projects) {
+  if (!projects || projects.length === 0) return;
+
+  const container = document.getElementById("modCards");
+  if (container) {
+    container.innerHTML = projects
+      .map((proj) => {
+        const tags = (proj.display_categories || [])
+          .slice(0, 4)
+          .map((cat) => `<span class="mod-tag">${cat}</span>`)
+          .join("");
+        const icon = proj.icon_url || "";
+        const slug = proj.slug || proj.project_id;
+        const title = proj.title || proj.slug || "Untitled";
+        const desc = proj.description || "No description available";
+        return `
+      <a class="mod-card" href="https://modrinth.com/mod/${slug}" target="_blank">
+        <img class="mod-icon" src="${icon}" alt="${title}" onerror="this.style.display='none'">
+        <div class="mod-body">
+          <div class="mod-header"><span class="mod-name">${title}</span></div>
+          <div class="mod-desc">${desc}</div>
+          <div class="mod-tags">${tags}</div>
+        </div>
+        <div class="mod-meta"><div class="mod-stat mod-stat-downloads">↓ ${formatNumber(proj.downloads)}</div><div class="mod-stat">♥ ${proj.followers ?? 0}</div></div>
+      </a>
+    `;
+      })
+      .join("");
+  }
+
+  const totalDownloads = projects.reduce(
+    (sum, proj) => sum + (proj.downloads || 0),
+    0,
+  );
+
+  const projEl = document.getElementById("hero-mod-projects");
+  if (projEl) projEl.textContent = projects.length;
+
+  const dlEl = document.getElementById("hero-mod-downloads");
+  if (dlEl) dlEl.textContent = formatNumber(totalDownloads);
+
+  const statEl = document.getElementById("stat-modrinth");
+  if (statEl) statEl.textContent = projects.length;
+}
+
 // Render featured projects
 function renderFeaturedProjects(repos) {
   const container = document.getElementById("featuredProjects");
@@ -262,10 +335,10 @@ const pages = {
           <div class="hero-name">HelixCraft</div>
           <div class="hero-bio">Open source hobbyist developer from Germany. I build tools I find useful and share them so others can benefit too. Mostly working with Java, Python, and Bash on Linux.</div>
           <div class="hero-stats">
-            <div class="hero-stat"><strong>4</strong> Modrinth projects</div>
-            <div class="hero-stat"><strong>1.52K</strong> downloads</div>
+            <div class="hero-stat"><strong id="hero-mod-projects">—</strong> Modrinth projects</div>
+            <div class="hero-stat"><strong id="hero-mod-downloads">—</strong> Mod Downloads</div>
             <div class="hero-stat"><strong>17</strong> GitHub repos</div>
-            <div class="hero-stat">Joined 6 months ago</div>
+            <div class="hero-stat"><strong id="hero-stat-stars">—</strong> GitHub stars</div>
           </div>
           <div class="hero-links">
             <a class="btn btn-ghost" href="https://github.com/HelixCraft" target="_blank">
@@ -290,44 +363,7 @@ const pages = {
         </div>
         <div class="projects-right">
           <div class="section-label">Modrinth Mods</div>
-          <div class="mod-cards-wrap">
-            <a class="mod-card" href="https://modrinth.com/mod/gBJA7Z3y" target="_blank">
-              <img class="mod-icon" src="https://cdn.modrinth.com/data/gBJA7Z3y/22168fb5702d54e4dae1aaa80a64b7e8f6316e15_96.webp" alt="AFK Utilitys">
-              <div class="mod-body">
-                <div class="mod-header"><span class="mod-name">AFK Utilitys</span></div>
-                <div class="mod-desc">Advanced AFK management mod for Minecraft Fabric with anti-kick protection, auto-reconnect, safety disconnect, and hunger management.</div>
-                <div class="mod-tags"><span class="mod-tag">Client</span><span class="mod-tag">Management</span><span class="mod-tag">Fabric</span></div>
-              </div>
-              <div class="mod-meta"><div class="mod-stat">↓ 807</div><div class="mod-stat">♥ 5</div></div>
-            </a>
-            <a class="mod-card" href="https://modrinth.com/mod/UTBKI2t1" target="_blank">
-              <img class="mod-icon" src="https://cdn.modrinth.com/data/UTBKI2t1/1093fd14527f4527e400f2f4642d5a462a2a375a_96.webp" alt="Fabric Packet Logger">
-              <div class="mod-body">
-                <div class="mod-header"><span class="mod-name">Fabric Packet Logger</span></div>
-                <div class="mod-desc">Deep packet logging mod for Minecraft Fabric — captures all network traffic with full NBT/Component data.</div>
-                <div class="mod-tags"><span class="mod-tag">Client</span><span class="mod-tag">Technology</span><span class="mod-tag">Fabric</span></div>
-              </div>
-              <div class="mod-meta"><div class="mod-stat">↓ 548</div><div class="mod-stat">♥ 4</div></div>
-            </a>
-            <a class="mod-card" href="https://modrinth.com/mod/mEPBTWnK" target="_blank">
-              <img class="mod-icon" src="https://cdn.modrinth.com/data/mEPBTWnK/a6f8dd2a319f57d2f5ce149821b7393b58fef854_96.webp" alt="Container Data Dumper">
-              <div class="mod-body">
-                <div class="mod-header"><span class="mod-name">Container Data Dumper</span></div>
-                <div class="mod-desc">Copy container inventory data as Data Components directly to your clipboard — works with any container block or entity in Minecraft 1.20–1.21+.</div>
-                <div class="mod-tags"><span class="mod-tag">Client</span><span class="mod-tag">Fabric</span></div>
-              </div>
-              <div class="mod-meta"><div class="mod-stat">↓ 98</div><div class="mod-stat">♥ 2</div></div>
-            </a>
-            <a class="mod-card" href="https://modrinth.com/mod/l5dv9Uyi" target="_blank">
-              <img class="mod-icon" src="https://cdn.modrinth.com/data/l5dv9Uyi/cbe9e6e989f39525ca8f34a1da9ddc17d943bb02_96.webp" alt="Slot Click Macros">
-              <div class="mod-body">
-                <div class="mod-header"><span class="mod-name">Slot Click Macros</span></div>
-                <div class="mod-desc">Records and replays inventory click sequences to automate repetitive container interactions.</div>
-                <div class="mod-tags"><span class="mod-tag">Client</span><span class="mod-tag">Fabric</span></div>
-              </div>
-              <div class="mod-meta"><div class="mod-stat">↓ 71</div><div class="mod-stat">♥ 3</div></div>
-            </a>
-          </div>
+          <div class="mod-cards-wrap" id="modCards"></div>
         </div>
       </div>
       <div class="section-label" style="margin-top:44px">All Public Repositories</div>
@@ -361,7 +397,7 @@ const pages = {
         <div class="stat-cell"><div class="stat-num" id="stat-commits">—</div><div class="stat-label">contributions / year</div></div>
         <div class="stat-cell"><div class="stat-num" id="stat-repos">—</div><div class="stat-label">public repos</div></div>
         <div class="stat-cell"><div class="stat-num" id="stat-stars">—</div><div class="stat-label">total stars</div></div>
-        <div class="stat-cell"><div class="stat-num">4</div><div class="stat-label">Modrinth mods</div></div>
+        <div class="stat-cell"><div class="stat-num" id="stat-modrinth">—</div><div class="stat-label">Modrinth mods</div></div>
       </div>
     </div>
   `,
@@ -483,10 +519,20 @@ async function init() {
   const repos = await fetchGitHubRepos();
   if (repos) {
     allRepos = repos.sort((a, b) => b.stargazers_count - a.stargazers_count);
+    const totalStars = allRepos.reduce(
+      (sum, repo) => sum + repo.stargazers_count,
+      0,
+    );
+    const starsEl = document.getElementById("hero-stat-stars");
+    if (starsEl) starsEl.textContent = totalStars || "—";
   }
 
   // Initial route
   router();
+
+  // Fetch Modrinth projects (public API, no key needed)
+  const projects = await fetchModrinthProjects();
+  if (projects) renderModrinth(projects);
 }
 
 // Run on page load
