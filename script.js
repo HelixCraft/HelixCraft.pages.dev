@@ -154,6 +154,8 @@ function formatNumber(num) {
 function renderModrinth(projects) {
   if (!projects || projects.length === 0) return;
 
+  projects = [...projects].sort((a, b) => (b.downloads || 0) - (a.downloads || 0));
+
   const container = document.getElementById("modCards");
   if (container) {
     container.innerHTML = projects
