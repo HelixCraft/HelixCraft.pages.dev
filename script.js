@@ -7,6 +7,32 @@ const LANG_COLORS = {
   JavaScript: "#f1e05a",
   HTML: "#e34c26",
   CSS: "#563d7c",
+  Bash: "#89e051",
+  Shell: "#89e051",
+  C: "#555555",
+  "C++": "#f34b7d",
+  "C#": "#178600",
+  Go: "#00ADD8",
+  Rust: "#dea584",
+  PHP: "#4F5D95",
+  Ruby: "#701516",
+  Lua: "#000080",
+  "Objective-C": "#438eff",
+  Swift: "#F05138",
+  R: "#198CE7",
+  PowerShell: "#012456",
+  Makefile: "#427819",
+  Vimscript: "#199f4b",
+  Nix: "#7e7eff",
+  Batchfile: "#C1F12E",
+  Dockerfile: "#384d54",
+  Vue: "#41b883",
+  Groovy: "#4298b8",
+  Scala: "#c22d40",
+  Haskell: "#5e5086",
+  Assembly: "#6E4C13",
+  Text: "#5d6160",
+  Markdown: "#083fa1",
 };
 
 // Featured projects
@@ -21,6 +47,7 @@ const FEATURED_REPOS = [
 // Global state
 let allRepos = [];
 let modrinthProjects = null;
+let langData = null;
 let currentSort = { column: "stars", direction: "asc" };
 
 // Theme toggle
@@ -117,7 +144,7 @@ async function fetchGitHubStats() {
       (e) => new Date(e.created_at) > oneYearAgo,
     ).length;
 
-    return { repos: user.public_repos, contributions };
+    return { repos: user.public_repos, contributions, followers: user.followers };
   } catch (error) {
     console.error("Error fetching GitHub stats:", error);
     return null;
@@ -188,6 +215,10 @@ function renderModrinth(projects) {
     (sum, proj) => sum + (proj.downloads || 0),
     0,
   );
+  const totalFollowers = projects.reduce(
+    (sum, proj) => sum + (proj.followers || 0),
+    0,
+  );
 
   const projEl = document.getElementById("hero-mod-projects");
   if (projEl) projEl.textContent = projects.length;
@@ -197,6 +228,12 @@ function renderModrinth(projects) {
 
   const statEl = document.getElementById("stat-modrinth");
   if (statEl) statEl.textContent = projects.length;
+
+  const statDlEl = document.getElementById("stat-mod-downloads");
+  if (statDlEl) statDlEl.textContent = formatNumber(totalDownloads);
+
+  const statFolEl = document.getElementById("stat-mod-followers");
+  if (statFolEl) statFolEl.textContent = formatNumber(totalFollowers);
 }
 
 // Render featured projects
@@ -332,6 +369,113 @@ function renderStats(stats) {
     stats.contributions || "—";
   document.getElementById("stat-repos").textContent = stats.repos || "—";
   document.getElementById("stat-stars").textContent = totalStars || "—";
+  const folEl = document.getElementById("stat-followers");
+  if (folEl) folEl.textContent = formatNumber(stats.followers) || "—";
+}
+
+// Deterministic color for languages not in LANG_COLORS
+function langColor(name) {
+  if (LANG_COLORS[name]) return LANG_COLORS[name];
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return `hsl(${Math.abs(hash) % 360}, 55%, 55%)`;
+}
+
+// Fetch real byte counts per language across all repos
+async function fetchLanguages() {
+  if (langData) return langData;
+
+  const cacheKey = "langCache";
+  try {
+    const cached = JSON.parse(localStorage.getItem(cacheKey));
+    if (cached && Date.now() - cached.ts < 3600000) {
+      langData = cached.data;
+      return langData;
+    }
+  } catch (e) {
+    /* ignore corrupt cache */
+  }
+
+  let bytes = {};
+  const repos = allRepos.filter((r) => r.language);
+  let usedFallback = false;
+
+  try {
+    const results = await Promise.all(
+      repos.map(async (repo) => {
+        const res = await fetch(
+          `https://api.github.com/repos/HelixCraft/${repo.name}/languages`,
+        );
+        if (!res.ok) throw new Error(`status ${res.status}`);
+        return res.json();
+      }),
+    );
+    results.forEach((langs) => {
+      for (const [name, count] of Object.entries(langs)) {
+        bytes[name] = (bytes[name] || 0) + count;
+      }
+    });
+  } catch (error) {
+    usedFallback = true;
+    repos.forEach((repo) => {
+      if (repo.language) bytes[repo.language] = (bytes[repo.language] || 0) + 1;
+    });
+  }
+
+  const total = Object.values(bytes).reduce((a, b) => a + b, 0);
+  langData = {
+    usedFallback,
+    total,
+    langs: Object.entries(bytes)
+      .map(([name, count]) => ({ name, count, pct: total ? count / total : 0 }))
+      .sort((a, b) => b.count - a.count),
+  };
+
+  try {
+    localStorage.setItem(cacheKey, JSON.stringify({ ts: Date.now(), data: langData }));
+  } catch (e) {
+    /* storage may be unavailable */
+  }
+  return langData;
+}
+
+// Render the language donut chart (CSS conic-gradient, no library)
+function renderLanguageChart(data) {
+  if (!data || data.total === 0) return;
+
+  const top = data.langs.slice(0, 8);
+  const rest = data.langs.slice(8);
+  const restCount = rest.reduce((sum, l) => sum + l.count, 0);
+  const slices = top.map((l) => ({ name: l.name, count: l.count, color: langColor(l.name) }));
+  if (restCount > 0) slices.push({ name: "Other", count: restCount, color: "#445244" });
+
+  let cursor = 0;
+  const stops = slices.map((s) => {
+    const start = (cursor / data.total) * 360;
+    cursor += s.count;
+    const end = (cursor / data.total) * 360;
+    return `${s.color} ${start}deg ${end}deg`;
+  });
+
+  const donut = document.getElementById("langDonut");
+  if (donut) donut.style.background = `conic-gradient(${stops.join(",")})`;
+
+  const totalEl = document.getElementById("langDonutTotal");
+  if (totalEl) totalEl.textContent = formatNumber(data.total);
+
+  const legend = document.getElementById("langLegend");
+  if (!legend) return;
+  legend.innerHTML = slices
+    .map(
+      (s) => `
+      <div class="lang-legend-row">
+        <div class="lang-legend-name"><span class="lang-dot" style="background:${s.color}"></span>${s.name}</div>
+        <div class="lang-legend-val"><strong>${(s.count / data.total * 100).toFixed(1)}%</strong><span>${formatNumber(s.count)}</span></div>
+      </div>`,
+    )
+    .join("");
 }
 
 // Page templates
@@ -407,6 +551,14 @@ const pages = {
         <div class="stat-cell"><div class="stat-num" id="stat-repos">—</div><div class="stat-label">public repos</div></div>
         <div class="stat-cell"><div class="stat-num" id="stat-stars">—</div><div class="stat-label">total stars</div></div>
         <div class="stat-cell"><div class="stat-num" id="stat-modrinth">—</div><div class="stat-label">Modrinth mods</div></div>
+        <div class="stat-cell"><div class="stat-num" id="stat-mod-downloads">—</div><div class="stat-label">Mod Downloads</div></div>
+        <div class="stat-cell"><div class="stat-num" id="stat-mod-followers">—</div><div class="stat-label">Mod Followers</div></div>
+        <div class="stat-cell"><div class="stat-num" id="stat-followers">—</div><div class="stat-label">GitHub followers</div></div>
+      </div>
+      <div class="section-label">Top Languages</div>
+      <div class="lang-wrap">
+        <div class="lang-donut" id="langDonut"><div class="lang-donut-inner"><div id="langDonutTotal">—</div></div></div>
+        <div class="lang-legend" id="langLegend"></div>
       </div>
     </div>
   `,
@@ -514,6 +666,7 @@ function router() {
   } else if (pageName === "activity") {
     fetchGitHubStats().then((stats) => renderStats(stats));
     if (modrinthProjects) renderModrinth(modrinthProjects);
+    fetchLanguages().then((data) => renderLanguageChart(data));
   }
 
   window.scrollTo(0, 0);
