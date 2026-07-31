@@ -20,7 +20,7 @@ const FEATURED_REPOS = [
 
 // Global state
 let allRepos = [];
-let currentSort = { column: "stars", direction: "desc" };
+let currentSort = { column: "stars", direction: "asc" };
 
 // Theme toggle
 function toggleTheme() {
