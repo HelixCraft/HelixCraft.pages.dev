@@ -846,11 +846,11 @@ body.light-mode .contrib-inner img {
 }
 
 /* THEMED LOGO IMAGE */
-.modrinth-icon {
+.simple-icon {
   filter: brightness(0) invert(1);
   flex-shrink: 0;
 }
-body.light-mode .modrinth-icon {
+body.light-mode .simple-icon {
   filter: brightness(0);
 }
 
