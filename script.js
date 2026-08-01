@@ -499,7 +499,7 @@ const pages = {
               GitHub
             </a>
             <a class="btn btn-ghost" href="https://modrinth.com/user/HelixCraft" target="_blank">
-              <svg width="13" height="13" viewBox="0 0 512 514" fill="currentColor"><path d="M503.6 241.5c-7.5 29.1-18.8 56.9-33.3 82.6-45.7 79.3-130.8 131.1-224.3 131.1-82.5 0-159.1-39.3-208.8-104.2L0 369.6V271.4h98.3l.1 54.4c40.6 51.7 102.7 83.3 166.7 83.3 73.7 0 141-38.7 179.4-100.5 11.7-19.3 20.3-40.2 25.6-62.1l33.5 47.4zm8.4-115.7V224H413.7l-.1-54.4c-40.6-51.7-102.7-83.3-166.7-83.3-73.7 0-141 38.7-179.4 100.5-11.7 19.3-20.3 40.2-25.6 62.1L8.4 201.5C15.9 172.4 27.2 144.6 41.7 119c45.7-79.3 130.8-131.1 224.3-131.1 82.5 0 159.1 39.3 208.8 104.2L512 73.9l-.1 51.9z"/></svg>
+              <img class="modrinth-icon" src="https://upload.wikimedia.org/wikipedia/commons/3/38/Modrinth_Logo.webp" alt="Modrinth" width="13" height="13">
               Modrinth
             </a>
             <a class="btn btn-ghost" href="https://discordapp.com/users/1502297205845790781" target="_blank">
@@ -581,7 +581,7 @@ const pages = {
       </div>
       <div class="section-label">Links</div>
       <a class="social-link" href="https://modrinth.com/user/HelixCraft" target="_blank">
-        <svg width="17" height="17" viewBox="0 0 512 514" fill="var(--text2)"><path d="M503.6 241.5c-7.5 29.1-18.8 56.9-33.3 82.6-45.7 79.3-130.8 131.1-224.3 131.1-82.5 0-159.1-39.3-208.8-104.2L0 369.6V271.4h98.3l.1 54.4c40.6 51.7 102.7 83.3 166.7 83.3 73.7 0 141-38.7 179.4-100.5 11.7-19.3 20.3-40.2 25.6-62.1l33.5 47.4zm8.4-115.7V224H413.7l-.1-54.4c-40.6-51.7-102.7-83.3-166.7-83.3-73.7 0-141 38.7-179.4 100.5-11.7 19.3-20.3 40.2-25.6 62.1L8.4 201.5C15.9 172.4 27.2 144.6 41.7 119c45.7-79.3 130.8-131.1 224.3-131.1 82.5 0 159.1 39.3 208.8 104.2L512 73.9l-.1 51.9z"/></svg>
+        <img class="modrinth-icon" src="https://upload.wikimedia.org/wikipedia/commons/3/38/Modrinth_Logo.webp" alt="Modrinth" width="17" height="17">
         <div class="social-text"><strong>Modrinth</strong>modrinth.com/user/HelixCraft</div>
       </a>
       <a class="social-link" href="https://github.com/HelixCraft" target="_blank">

@@ -845,6 +845,15 @@ body.light-mode .contrib-inner img {
   font-size: 12px;
 }
 
+/* THEMED LOGO IMAGE */
+.modrinth-icon {
+  filter: brightness(0) invert(1);
+  flex-shrink: 0;
+}
+body.light-mode .modrinth-icon {
+  filter: brightness(0);
+}
+
 /* DONATE */
 .donate-heart-banner {
   display: flex;
